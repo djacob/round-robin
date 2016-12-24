@@ -1,0 +1,27 @@
+{
+  players: {
+    id: {}
+  }
+  seeding: {
+    initial: [
+      {seed, playerId}
+    ],
+    prePool: [
+      {seed, playerId, poolId}
+    ],
+    postPool: [
+      {seed, playerId}
+    ],
+    final: [
+      {seed, playerId}
+    ]
+  }
+  encounters: {
+    poolEncounters: [
+      {encounterId, poolId, player1Id, player1Score, player2id, player2score}
+    ],
+    tableauEncounters: [
+      {encounterId, round, player1Id, player1score, player2id, player2score}
+    ]
+  }
+}
