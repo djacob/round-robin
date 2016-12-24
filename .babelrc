@@ -1,3 +1,9 @@
 {
-  "extends": "./node_modules/electrode-archetype-react-app/config/babel/.babelrc"
+  "extends": "./node_modules/electrode-archetype-react-app/config/babel/.babelrc",
+  "plugins": [
+    "syntax-class-properties",
+    "syntax-decorators",
+    "transform-class-properties",
+    "transform-decorators-legacy"
+  ]
 }

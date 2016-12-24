@@ -1,10 +1,11 @@
 import React from 'react';
-import SimpleList from './SimpleList';
 
 export default class PlayerContainer extends React.Component {
   render() {
+    const {player} = this.props;
+
     return (
-      <SimpleList items={this.props.players}/>
+      <div>Player: {player.name} </div>
     );
   }
 }
