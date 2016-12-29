@@ -20,7 +20,9 @@ export default class TournamentContainer extends React.Component {
         </div>
         <Seeding players={tournament.seededPlayers}/>
 
-        {tournament.rounds.map(round => <Round round={round}/>)}
+        {tournament.rounds.map((round, index) =>
+          <Round round={round} recordEncounter={this.props.recordEncounter.bind(this, index)}/>
+        )}
 
         <hr/>
 

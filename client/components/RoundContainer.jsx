@@ -9,7 +9,7 @@ export default class RoundContainer extends React.Component {
     var content;
     switch (round.type) {
       case 'ladder':
-        content = <Ladder round={round}/>;
+        content = <Ladder round={round} recordEncounter={this.props.recordEncounter}/>;
         break;
       case 'roundrobin':
         content = <Pools pools={round.pools}/>;

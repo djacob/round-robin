@@ -59,7 +59,7 @@ export default class LadderContainer extends React.Component {
                 {
                   round.encounters
                     .filter(encounter => !encounter.result)
-                    .map(encounter => <Encounter encounter={encounter}/>)
+                    .map(encounter => <Encounter encounter={encounter} recordEncounter={this.props.recordEncounter}/>)
                 }
               </div>
               <div>

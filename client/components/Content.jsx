@@ -14,7 +14,11 @@ export default class Content extends React.Component {
     return (
       <div>
         <TournamentSetup saveTournament={this.saveTournament}/>
-        <TournamentContainer tournament={this.state.tournament} startRound={this.startRound} refreshTournament={this.refreshTournament}/>
+        <TournamentContainer tournament={this.state.tournament}
+                             startRound={this.startRound}
+                             refreshTournament={this.refreshTournament}
+                             recordEncounter={this.recordEncounter}
+        />
       </div>
     );
   }
@@ -64,6 +68,23 @@ export default class Content extends React.Component {
       .then(res => res.json())
       .then(tournament => {
         this.setState({tournament});
+      });
+  };
+
+  recordEncounter = (roundIndex, encounter, score) => {
+    var options = {
+      method: 'PUT',
+      ContentType: 'application/json',
+      body: JSON.stringify({...encounter, score})
+    };
+
+    fetch('/tournament/' + this.state.tournament.id + '/round/' + roundIndex + '/encounter/' + encounter.id, options)
+      .then(res => res.json())
+      .then(encounter => {
+        var encounterIndex = this.state.tournament.rounds[roundIndex].encounters.findIndex(en => en.id === encounter.id);
+        var updatedTournament = {...this.state.tournament};
+        updatedTournament.rounds[roundIndex].encounters[encounterIndex] = encounter;
+        this.setState({tournament: updatedTournament});
       });
   };
 }

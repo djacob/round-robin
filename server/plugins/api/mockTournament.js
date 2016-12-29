@@ -77,7 +77,10 @@ export function startRound(req, reply) {
         pool.players.forEach((player1, player1Seed) => {
           pool.players.forEach((player2, player2Seed) => {
             if (player1Seed < player2Seed) {
-              pool.encounters.push({player1: {...player1, seed: player1Seed}, player2: {...player2, seed: player2Seed}});
+              pool.encounters.push({
+                player1: {...player1, seed: player1Seed},
+                player2: {...player2, seed: player2Seed}
+              });
             }
           });
         });
@@ -136,7 +139,13 @@ export function addEncounter(req, reply) {
     return;
   }
   const encounter = JSON.parse(req.payload);
-  round.encounters = [...round.encounters, encounter].filter(encounter => !!encounter);
+  round.encounters = [
+    ...round.encounters,
+    {
+      ...encounter,
+      id: round.encounters ? round.encounters.length : 0
+    }
+  ].filter(encounter => !!encounter);
 
   reply(encounter);
 }
@@ -153,13 +162,16 @@ export function updateEncounter(req, reply) {
     reply({message: "Tournament does not have a round " + roundIndex}).code(404);
     return;
   }
-  const encounterIndex = round.encounters.findIndex(existingEncounter => existingEncounter.id === req.params.encounter_id);
+  const encounterIndex = round.encounters.findIndex(existingEncounter => existingEncounter.id == req.params.encounter_id);
   if (encounterIndex === -1) {
     reply({message: "Round does not have encounter " + req.params.encounter_id});
     return;
   }
   const encounter = JSON.parse(req.payload);
-  const updatedEncounter = [...round.encounters[encounterIndex], ...encounter];
+  var result = {
+    winner: parseInt(encounter.score.player1) > parseInt(encounter.score.player2) ? encounter.player1 : encounter.player2,
+  };
+  const updatedEncounter = {...round.encounters[encounterIndex], ...encounter, result};
   round.encounters[encounterIndex] = updatedEncounter;
   reply(updatedEncounter);
 }
