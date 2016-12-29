@@ -9,6 +9,9 @@
         "pathPrefix": "dist"
       }
     },
+    "tournament": {
+      "module": "./server/plugins/tournament"
+    },
     "webapp": {
       "module": "./server/plugins/webapp",
       "options": {
