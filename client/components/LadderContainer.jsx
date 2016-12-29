@@ -1,4 +1,5 @@
 import React from 'react';
+import Encounter from './EncounterContainer';
 
 export default class LadderContainer extends React.Component {
   render() {
@@ -49,7 +50,29 @@ export default class LadderContainer extends React.Component {
             );
           })
         }
-
+        { !round.encounters ? false : (
+          <div>
+            <h2>Encounters</h2>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <div>
+                <h3>Challenges</h3>
+                {
+                  round.encounters
+                    .filter(encounter => !encounter.result)
+                    .map(encounter => <Encounter encounter={encounter}/>)
+                }
+              </div>
+              <div>
+                <h3>Completed</h3>
+                {
+                  round.encounters
+                    .filter(encounter => !!encounter.result)
+                    .map(encounter => <Encounter encounter={encounter}/>)
+                }
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

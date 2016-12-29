@@ -74,10 +74,10 @@ export function startRound(req, reply) {
 
       pools.forEach(pool => {
         pool.encounters = [];
-        pool.players.forEach((player1, index1) => {
-          pool.players.forEach((player2, index2) => {
-            if (index1 < index2) {
-              pool.encounters.push({index1, index2, player1, player2});
+        pool.players.forEach((player1, player1Seed) => {
+          pool.players.forEach((player2, player2Seed) => {
+            if (player1Seed < player2Seed) {
+              pool.encounters.push({player1: {...player1, seed: player1Seed}, player2: {...player2, seed: player2Seed}});
             }
           });
         });
@@ -136,7 +136,7 @@ export function addEncounter(req, reply) {
     return;
   }
   const encounter = JSON.parse(req.payload);
-  round.encounters = [...round.encounters, encounter];
+  round.encounters = [...round.encounters, encounter].filter(encounter => !!encounter);
 
   reply(encounter);
 }
