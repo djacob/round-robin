@@ -8,7 +8,11 @@ export default class TournamentSetupContainer extends React.Component {
     this.state = {
       tournament: {
         seedingType: 'RANDOM',
-        rounds: [{type: 'roundrobin', min: '2', preferred: '5', max: '4'}, {type: 'singleelim'}],
+        rounds: [
+          {type: 'ladder', 'levelIncrease': 1},
+          {type: 'roundrobin', min: '2', preferred: '5', max: '4'},
+          {type: 'singleelim'}
+        ],
         players: []
       }
     };

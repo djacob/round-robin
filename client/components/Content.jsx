@@ -51,20 +51,15 @@ export default class Content extends React.Component {
     return seededPlayers;
   };
 
-  /*
-   tournament: {
-   seedingType: 'RANDOM',
-   rounds: [{type: 'roundrobin', min: '5', preferred: '7', max: '8'}, {type: 'singleelim'}],
-   players: []
-   }
-   */
-
   startRound = (tournament, playerKey, roundIndex) => {
     var players = tournament[playerKey];
     var round = tournament.rounds[roundIndex];
     var updatedTournament = {...tournament};
 
-    switch(round.type) {
+    switch (round.type) {
+      case 'ladder':
+        updatedTournament.rounds[roundIndex] = {...round, players};
+        break;
       case 'roundrobin':
         var poolCount = Math.floor(players.length / round.preferred);
         var pools = [];
@@ -79,14 +74,14 @@ export default class Content extends React.Component {
           if (phase === 0 || phase % 2 === 0) {
             poolIndex = remainder;
           } else {
-            poolIndex = (poolCount-1) - remainder;
+            poolIndex = (poolCount - 1) - remainder;
           }
           pools[poolIndex].players = [...pools[poolIndex].players, player];
         });
 
         pools.forEach(pool => {
           pool.encounters = [];
-          pool.players.forEach((player1,index1)  => {
+          pool.players.forEach((player1, index1) => {
             pool.players.forEach((player2, index2) => {
               if (index1 < index2) {
                 pool.encounters.push({index1, index2, player1, player2});
@@ -98,7 +93,17 @@ export default class Content extends React.Component {
         updatedTournament.rounds[roundIndex] = {...round, pools};
         break;
       case 'singleelim':
-        round.tableu = [];
+        var roundCount = Math.ceil(Math.log2(players.length));
+        var encounters = [];
+        for (var roundNumber = 0; roundNumber < roundCount; roundNumber++) {
+          var roundEncounterCount = Math.pow(2, roundNumber + 1);
+          for (var k = 1; k < (roundEncounterCount + 1) / 2; k++) {
+            encounters = [...encounters, {seed1: k, seed2: (roundEncounterCount + 1) - k}
+            ];
+          }
+        }
+
+        updatedTournament.rounds[roundIndex] = {...round, encounters: encounters.reverse(), players};
         break;
       default:
         break;
