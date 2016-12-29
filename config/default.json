@@ -10,7 +10,7 @@
       }
     },
     "tournament": {
-      "module": "./server/plugins/tournament"
+      "module": "./server/plugins/api/tournament"
     },
     "webapp": {
       "module": "./server/plugins/webapp",

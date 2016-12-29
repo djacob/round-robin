@@ -1,10 +1,8 @@
 import React from 'react';
 import Seeding from './SeedingContainer';
-import Encounters from './EncountersContainer';
 import Results from './ResultsContainer';
-import Pools from './PoolsContainer';
-import SingleElimination from './SingleEliminationContainer';
-import Ladder from './LadderContainer';
+import StartRound from './StartRoundContainer';
+import Round from './RoundContainer';
 
 export default class TournamentContainer extends React.Component {
   render() {
@@ -16,32 +14,24 @@ export default class TournamentContainer extends React.Component {
 
     return (
       <div>
-        <h1>{tournament.name}</h1>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <h1>{tournament.name}</h1>
+          <button onClick={this.props.refreshTournament}>Refresh</button>
+        </div>
+        <Seeding players={tournament.seededPlayers}/>
 
-        <Seeding players={tournament.initialSeeding}/>
-
-        <button onClick={this.startInitialRound}>Start Round</button>
+        {tournament.rounds.map(round => <Round round={round}/>)}
 
         <hr/>
 
-        <Ladder round={tournament.rounds.find(round => round.type === 'ladder')} />
-
-        <Pools pools={(tournament.rounds.find(round => round.type === 'roundrobin') || {}).pools}/>
-
-        <button onClick={this.startSecondRound}>Start Round 2</button>
-
-        {/*<SingleElimination round={tournament.rounds.find(round => round.type === 'singleelim')}/>*/}
+        <StartRound startRound={this.startRound}/>
 
         <Results />
       </div>
     );
   }
 
-  startInitialRound = () => {
-    this.props.startRound(this.props.tournament, 'initialSeeding', 0);
+  startRound = (roundNumber) => {
+    this.props.startRound(this.props.tournament, 'seededPlayers', roundNumber);
   };
-
-  startSecondRound = () => {
-    this.props.startRound(this.props.tournament, 'initialSeeding', 1);
-  }
 }
