@@ -139,13 +139,8 @@ export function addEncounter(req, reply) {
     return;
   }
   const encounter = JSON.parse(req.payload);
-  round.encounters = [
-    ...round.encounters,
-    {
-      ...encounter,
-      id: round.encounters ? round.encounters.length : 0
-    }
-  ].filter(encounter => !!encounter);
+  encounter.id = round.encounters ? round.encounters.length : 0;
+  round.encounters = [...round.encounters, {...encounter}].filter(encounter => !!encounter);
 
   reply(encounter);
 }

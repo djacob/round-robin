@@ -1,6 +1,7 @@
 import React from 'react';
 import Ladder from './LadderContainer';
 import Pools from './PoolsContainer';
+import AddEncounter from './AddEncounterContainer';
 
 export default class RoundContainer extends React.Component {
   render() {
@@ -17,6 +18,16 @@ export default class RoundContainer extends React.Component {
       default:
         content = false;
     }
-    return content;
+    return (
+      <div>
+        <div>
+          {content}
+        </div>
+        <div>
+          <h3>Add Encounter</h3>
+          <AddEncounter round={round} addEncounter={this.props.addEncounter}/>
+        </div>
+      </div>
+    );
   }
 }

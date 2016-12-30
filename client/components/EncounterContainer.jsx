@@ -36,7 +36,9 @@ export default class EncounterContainer extends React.Component {
       content = (
         <div>
           <div>
-            ({player1.seed + 1}) {player1.name} v ({player2.seed + 1}) {player2.name}
+            <span>({player1.seed + (player1.seed !== undefined ? 1 : '')}) {player1.name}</span>
+            <span> v </span>
+            <span>({player2.seed + (player2.seed !== undefined ? 1 : '')}) {player2.name}</span>
           </div>
           <div>
             <input value={this.state.score.player1} onChange={this.scoreUpdated.bind(this, 'player1')}/>

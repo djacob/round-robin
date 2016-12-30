@@ -18,6 +18,7 @@ export default class Content extends React.Component {
                              startRound={this.startRound}
                              refreshTournament={this.refreshTournament}
                              recordEncounter={this.recordEncounter}
+                             addEncounter={this.addEncounter}
         />
       </div>
     );
@@ -68,6 +69,26 @@ export default class Content extends React.Component {
       .then(res => res.json())
       .then(tournament => {
         this.setState({tournament});
+      });
+  };
+
+  addEncounter = (roundIndex, encounter) => {
+    var options = {
+      method: 'POST',
+      ContentType: 'application/json',
+      body: JSON.stringify({...encounter})
+    };
+
+    //TODO: Adds extra undefined encounter at the start of the list :'(
+    fetch('/tournament/' + this.state.tournament.id + '/round/' + roundIndex + '/encounter', options)
+      .then(res => res.json())
+      .then(encounter => {
+        var updatedTournament = {...this.state.tournament};
+        updatedTournament.rounds[roundIndex].encounters = [
+          ...updatedTournament.rounds[roundIndex].encounters,
+          encounter
+        ].filter(encounter => !!encounter);
+        this.setState({tournament: updatedTournament});
       });
   };
 
