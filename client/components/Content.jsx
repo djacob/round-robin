@@ -4,10 +4,18 @@ import TournamentContainer from './TournamentContainer';
 
 export default class Content extends React.Component {
 
+  refreshInterval = 10 * 1000;
+  /* Seconds * Milliseconds */
+  refreshRef;
+
   constructor(props) {
     super(props);
     this.state = {};
   };
+
+  // componentDidMount() {
+  //   // this.refreshRef = setInterval(this.refreshTournament, this.refreshInterval);
+  // }
 
   render() {
 
@@ -64,6 +72,11 @@ export default class Content extends React.Component {
       method: 'GET',
       ContentType: 'application/json'
     };
+
+    if (this.state.tournament === undefined) {
+      console.log('No tournament, cannot refresh');
+      return;
+    }
 
     fetch('/tournament/' + this.state.tournament.id, options)
       .then(res => res.json())

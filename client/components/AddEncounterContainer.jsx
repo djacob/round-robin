@@ -2,14 +2,16 @@ import React from 'react';
 
 export default class AddEncounterContainer extends React.Component {
 
+  initialState = {
+    player1: '',
+    player2: '',
+    date: '',
+    time: ''
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      player1: undefined,
-      player2: undefined,
-      date: undefined,
-      time: undefined
-    };
+    this.state = {...this.initialState};
   }
 
   render() {
@@ -59,6 +61,10 @@ export default class AddEncounterContainer extends React.Component {
       date: this.state.date,
       time: this.state.time
     };
+
+    console.log('initial state', this.initialState);
+
+    this.setState(this.initialState);
     this.props.addEncounter(encounter);
   };
 }

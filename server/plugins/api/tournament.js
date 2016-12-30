@@ -15,7 +15,7 @@ const registerRoutes = (server, options, next) => {
   });
   server.route({
     method: "PUT", path: '/tournament/{id}/round/{round_index}/encounter/{encounter_id}',
-    handler: tournament.updateEncounter
+    handler: tournament.recordEncounter
   });
 
   next();

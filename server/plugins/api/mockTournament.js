@@ -145,7 +145,7 @@ export function addEncounter(req, reply) {
   reply(encounter);
 }
 
-export function updateEncounter(req, reply) {
+export function recordEncounter(req, reply) {
   var tournament = db.tournaments[req.params.id];
   if (!tournament) {
     reply({message: "No tournament with id " + req.params.id}).code(404);
