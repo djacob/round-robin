@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const CompetitorName = (props) => {
   return (
-      <div>
+      <span>
           {props.competitor.firstName} {props.competitor.lastName}
-      </div>
+      </span>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './CompetitorForm.css';
 import PropTypes from 'prop-types';
 
 class CompetitorForm extends Component {
@@ -13,10 +14,23 @@ class CompetitorForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.submitForm}>
-                <input type="input" name="firstName" value={this.state.firstName} onChange={this.setField}/>
-                <input type="input" name="lastName" value={this.state.lastName} onChange={this.setField}/>
-                <button type="submit">Create Competitor</button>
+            <form className="competitorForm" onSubmit={this.submitForm}>
+                <div className="fields">
+                    <div className="field">
+                        <label>First Name</label>
+                        <input type="input" name="firstName" placeholder="e.g. Jane"
+                               value={this.state.firstName} onChange={this.setField}/>
+                    </div>
+                    <div className="field">
+                        <label>Last Name</label>
+                        <input type="input" name="lastName" placeholder="e.g. Doe"
+                               value={this.state.lastName} onChange={this.setField}/>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit">Create Competitor</button>
+                </div>
+
             </form>
         );
     };
@@ -28,12 +42,13 @@ class CompetitorForm extends Component {
     submitForm = (evt) => {
         evt.preventDefault();
         evt.stopPropagation();
-        this.props.submitCompetitor(this.state);
+
+        this.props.onSubmit(this.state);
     };
 }
 
 CompetitorForm.propTypes = {
-    submitCompetitor: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired
 };
 
 export default CompetitorForm;

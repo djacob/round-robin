@@ -1,0 +1,20 @@
+.competitorForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.competitorForm .fields {
+    display: flex;
+    justify-content: center;
+}
+
+.competitorForm .fields .field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 20px;
+}
+
+.competitorForm button {
+    width: 200px;
+}

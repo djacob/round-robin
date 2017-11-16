@@ -1,29 +1,32 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
-import CompetitorName from './CompetitorName';
+import CompetitorSeeding from './CompetitorSeeding';
 import CompetitorForm from './CompetitorForm';
 
-class CompetitorEntry extends Component {
-    render() {
-
-        const competitors = this.props.competitors.map(
-            competitor => <CompetitorName key={competitor.id} competitor={competitor}/>
-        );
-
-        return (
+const CompetitorEntry = (props) => {
+    return (
+        <div>
+            <h1>Competitor Entry</h1>
+            <hr/>
             <div>
-                <h1>Competitors</h1>
-                <hr/>
-                <div>
-                    {competitors}
-                </div>
-                <hr/>
-                <CompetitorForm submitCompetitor={this.props.addCompetitor}/>
+                <CompetitorSeeding competitors={props.competitors}/>
             </div>
-        );
-    }
-}
+            <hr/>
+            <CompetitorForm onSubmit={props.addCompetitor}/>
+            <hr/>
+            <Link to={{
+                pathname: '/pool',
+                search: '?sort=name',
+                hash: '#the-hash',
+                state: { fromDashboard: true }
+            }}>
+                Start Pool
+            </Link>
+        </div>
+    );
+};
 
 CompetitorEntry.propTypes = {
     competitors: PropTypes.array.isRequired,
