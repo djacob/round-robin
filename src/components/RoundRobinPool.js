@@ -1,21 +1,33 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class RoundRobinPool extends Component {
+const RoundRobinPool = (props) => {
 
-    componentDidMount() {
-        const poolId = this.props.match.params.id;
-        fetch(`/api/pool/${poolId}`).then(result => {
-            console.log('result', result);
-        });
-    }
-
-    render() {
+    if (!props.pool) {
         return (
             <div>
-                Pool
+                Pool does not exist
             </div>
         );
     }
+
+    const competitors = props.pool.competitors.map(competitor => (
+        <div key={competitor.id}>
+            {competitor.firstName} {competitor.lastName}
+        </div>)
+    );
+
+    return (
+        <div>
+            {competitors}
+        </div>
+    );
+};
+
+RoundRobinPool.propTypes = {
+    pool: PropTypes.shape({
+        competitors: PropTypes.array.isRequired
+    }).isRequired
 };
 
 export default RoundRobinPool;

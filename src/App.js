@@ -5,7 +5,7 @@ import './App.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import CompetitorEntryContainer from './containers/CompetitorEntryContainer';
-import RoundRobinPool from './components/RoundRobinPool';
+import RoundRobinPoolContainer from './containers/RoundRobinPoolContainer';
 
 class App extends Component {
     render() {
@@ -17,7 +17,7 @@ class App extends Component {
                         <h1 className="App-title">Welcome to React</h1>
                     </header>
                     <Route exact path="/" component={CompetitorEntryContainer}/>
-                    <Route path="/pool/:id" component={RoundRobinPool}/>
+                    <Route path="/pool/:id" component={RoundRobinPoolContainer}/>
                 </div>
             </Router>
         );
